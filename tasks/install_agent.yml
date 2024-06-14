@@ -1,0 +1,21 @@
+---
+
+- name: check if consul is installed
+  stat: path=/usr/local/bin/consul
+  register: consul_installed
+  
+- name: download consul
+  get_url:
+    url: "{{ consul_url }}"
+    dest: "/tmp/consul_{{ version }}_linux_amd64.zip"
+    mode: 0755
+  when: consul_installed.stat.exists == False
+  
+- name: unzip consul
+  unarchive:
+    src: "/tmp/consul_{{ version }}_linux_amd64.zip"
+    dest: "/usr/local/bin"
+    remote_src: yes
+  when: consul_installed.stat.exists == False
+
+

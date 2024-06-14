@@ -1,0 +1,4 @@
+---
+- include_tasks: install_agent.yml
+- include_tasks: configure_agent.yml
+- include_tasks: start_agent.yml

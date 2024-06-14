@@ -1,0 +1,21 @@
+---
+
+- name: upload service file for consul
+  copy:
+    src: consul.service
+    dest: /etc/systemd/system/consul.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload systemd
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: start consul
+  systemd:
+    name: consul
+    state: started
+    enabled: yes
+

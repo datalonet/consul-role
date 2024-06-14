@@ -1,0 +1,4 @@
+---
+# defaults file for consul-role
+version : "1.19.0"
+consul_url : "https://releases.hashicorp.com/consul/{{ version }}/consul_{{ version }}_linux_amd64.zip"

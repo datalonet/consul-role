@@ -1,0 +1,30 @@
+- name: check if consul is installed
+  stat: path=/usr/local/bin/consul
+  register: consul_installed
+  
+- name: create consul user
+  user:
+    name: consul
+    state: present
+    system: yes
+    shell: /bin/false
+    home: /var/lib/consul 
+  when: consul_installed.stat.exists == False
+
+- name: create consul group 
+  group:
+    name: consul
+    state: present
+  when: consul_installed.stat.exists == False
+
+- name: create directories for consul
+  file:
+    path:  /etc/consul.d/
+    state: directory
+
+   
+- name: upload template for consul agent
+  template:
+    src: config.json.j2
+    dest: /etc/consul.d/config.json
+  
